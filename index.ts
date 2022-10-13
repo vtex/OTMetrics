@@ -1,7 +1,3 @@
-function teste() : void {
+export function teste() : void {
     console.log('oi')
-}
-
-module.exports = {
-    teste
 }
