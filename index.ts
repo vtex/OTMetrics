@@ -1,3 +1,3 @@
-export function teste() : void {
+export function teste() {
     console.log('oi')
 }
