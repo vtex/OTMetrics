@@ -4,5 +4,13 @@
   "main": "index.js",
   "repository": "https://github.com/andremedeiro/lib-tracing.git",
   "author": "André Martins <andre.lucas.medeir@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@opentelemetry/auto-instrumentations-node": "^0.33.1",
+    "@opentelemetry/sdk-node": "^0.33.0",
+    "fs": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "@types/node": "^18.8.5"
+  }
 }
