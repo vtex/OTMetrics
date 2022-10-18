@@ -18,4 +18,14 @@ sdk.start()
  .then(() => console.log('Tracing initialized'))
  .then(() => startServer())
 
-module.exports = traceExporter
+function onInterrupt() {
+  console.log('oi')
+
+  process.exit();
+}
+
+process.on('SIGINT', onInterrupt)  // CTRL+C
+process.on('SIGQUIT', onInterrupt) // Keyboard quit
+process.on('SIGTERM', onInterrupt) // `kill` command
+
+module.exports = sdk
