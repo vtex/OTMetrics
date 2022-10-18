@@ -1,5 +1,9 @@
 const tracer = require("./config/tracing")
 
-export function getFinishedSpans() {
+function getFinishedSpans() {
     return tracer.getFinishedSpans()
+}
+
+module.exports = {
+    getFinishedSpans
 }
