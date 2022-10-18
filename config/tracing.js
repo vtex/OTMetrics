@@ -19,7 +19,9 @@ sdk.start()
  .then(() => startServer())
 
 function onInterrupt() {
-  console.log('oi')
+  console.log(
+    traceExporter.getFinishedSpans()
+  )
 
   process.exit();
 }
