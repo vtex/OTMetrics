@@ -1,11 +1,5 @@
-const fs = require('fs')
-const path = process.cwd()
+const tracer = require("./config/tracing")
 
-console.log(path)
-
-export function teste() {
-    console.log('oi')
-}
-
-export function print() {
+export function getFinishedSpans() {
+    return tracer.getFinishedSpans()
 }
