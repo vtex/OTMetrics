@@ -13,21 +13,15 @@ const sdk = new opentelemetry.NodeSDK({
     getNodeAutoInstrumentations()
   ]
 });
- 
-sdk.start()
- .then(() => console.log('Tracing initialized'))
- .then(() => startServer())
 
-function onInterrupt() {
-  console.log(
+module.exports = {
+  start: () => {
+    sdk.start()
+      .then(() => console.log('Tracing initialized'))
+      .then(() => startServer())
+  },
+
+  getFinishedSpans: () => {
     traceExporter.getFinishedSpans()
-  )
-
-  process.exit();
+  }
 }
-
-process.on('SIGINT', onInterrupt)  // CTRL+C
-process.on('SIGQUIT', onInterrupt) // Keyboard quit
-process.on('SIGTERM', onInterrupt) // `kill` command
-
-module.exports = sdk
