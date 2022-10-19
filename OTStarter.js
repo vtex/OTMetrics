@@ -11,13 +11,13 @@ const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
 module.exports = {
-  startServer: async () => {
+  startServering: async () => {
     return app.prepare()
       .then(() => {
-        createServer(async (req, res) => {
-            const parsedUrl = parse(req.url, true)
-            await handle(req, res, parsedUrl)
-        }).listen(port, (err) => {
+        createServer(async (req, res) => 
+          await handle(req, res, parse(req.url, true))
+        )
+        .listen(port, (err) => {
           if (err) throw err
           console.log(`> Ready on http://${hostname}:${port}`)
         })

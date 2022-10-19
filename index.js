@@ -1,9 +1,15 @@
-const { start, getFinishedSpans } = require("./tracing")
+const { start, getFinishedSpans } = require("./OTCollector")
+const { startProcessing } = require("./OTProcessor");
 
 start()
 
 function onInterrupt() {
-    console.log(getFinishedSpans())    
+    console.log(
+        startProcessing(
+            getFinishedSpans()
+        )
+    )
+
     process.exit();
 }
   
