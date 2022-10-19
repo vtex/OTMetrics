@@ -21,7 +21,5 @@ module.exports = {
       .then(() => startServer())
   },
 
-  getFinishedSpans: () => {
-    traceExporter.getFinishedSpans()
-  }
+  getFinishedSpans: () => traceExporter.getFinishedSpans()
 }
