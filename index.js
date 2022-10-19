@@ -1,7 +1,7 @@
-const { start, getFinishedSpans } = require("./OTCollector")
+const { startCollecting, getFinishedSpans } = require("./OTCollector")
 const { startProcessing } = require("./OTProcessor");
 
-start()
+startCollecting()
 
 function onInterrupt() {
     console.log(
