@@ -1,6 +1,6 @@
 
-import { SpanContext } from '@opentelemetry/types'
+import { ReadableSpan } from '@opentelemetry/sdk-trace-base'
 
-export function biggestLatency( spans: SpanContext[] ){
+export function biggestLatency( spans: ReadableSpan[] ){
 
 }
