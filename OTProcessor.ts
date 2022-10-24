@@ -5,7 +5,7 @@ import { biggestLatency } from './functions'
 export function startProcessing( spans: ReadableSpan[] ) {
     let text = '\n\n ===== OTMetrics ===== \n';
 
-    text += '\n - Maior latência: '
+    text += '\n - Maior latência: ' + biggestLatency(spans)
 
     return text;
 }
