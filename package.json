@@ -2,6 +2,7 @@
   "name": "otmetrics",
   "version": "1.0.0",
   "main": "index.ts",
+  "type": "module",
   "repository": "https://github.com/andremedeiro/OTMetrics.git",
   "author": "André Martins <andre.lucas.medeir@gmail.com>",
   "license": "MIT",
