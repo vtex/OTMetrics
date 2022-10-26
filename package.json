@@ -1,7 +1,7 @@
 {
   "name": "otmetrics",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": "https://github.com/andremedeiro/OTMetrics.git",
   "author": "André Martins <andre.lucas.medeir@gmail.com>",
   "license": "MIT",
