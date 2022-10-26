@@ -1,15 +1,11 @@
-const { ReadableSpan } = require('@opentelemetry/sdk-trace-base')
+import { ReadableSpan } from '@opentelemetry/sdk-trace-base'
 
-const { biggestLatency } = require('./functions')
+import { biggestLatency } from './functions'
 
-module.exports = {
+export function startProcessing( spans: ReadableSpan[] ) {
+    let text = '\n\n ===== OTMetrics ===== \n';
 
-    startProcessing : ( spans: typeof ReadableSpan[] ) => {
-        let text = '\n\n ===== OTMetrics ===== \n';
-    
-        text += '\n - Maior latência: ' + biggestLatency(spans)
-    
-        return text;
-    }
-    
+    text += '\n - Maior latência: ' + biggestLatency(spans)
+
+    return text;
 }

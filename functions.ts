@@ -1,15 +1,14 @@
-module.exports = {
 
-    biggestLatency: ( spans: typeof ReadableSpan[] ) => {
-        let biggest : typeof ReadableSpan | null  = null;
-    
-        spans.forEach((span) => {
-            if(span.duration > ( biggest?.duration ?? 0 )) {
-                biggest == span
-            }
-        })
-    
-        return biggest
-    }
+import { ReadableSpan } from '@opentelemetry/sdk-trace-base'
 
+export function biggestLatency( spans: ReadableSpan[] ){
+    let biggest : ReadableSpan | null  = null;
+
+    spans.forEach((span) => {
+        if(span.duration > ( biggest?.duration ?? 0 )) {
+            biggest == span
+        }
+    })
+
+    return biggest
 }

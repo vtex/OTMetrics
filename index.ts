@@ -1,5 +1,5 @@
-const { startCollecting, getFinishedSpans } = require("./OTCollector")
-const { startProcessing } = require("./OTProcessor")
+import { startCollecting, getFinishedSpans } from "./OTCollector"
+import { startProcessing } from "./OTProcessor"
 
 startCollecting()
 

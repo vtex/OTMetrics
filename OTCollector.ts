@@ -1,9 +1,9 @@
 'use strict'
 
-const opentelemetry = require('@opentelemetry/sdk-node')
-const { getNodeAutoInstrumentations } = require('@opentelemetry/auto-instrumentations-node')
+import opentelemetry from '@opentelemetry/sdk-node'
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 
-const { startServering } = require('./OTStarter')
+import { startServering } from './OTStarter'
 
 const traceExporter = new opentelemetry.tracing.InMemorySpanExporter()
 
@@ -14,16 +14,12 @@ const sdk = new opentelemetry.NodeSDK({
   ]
 });
 
-module.exports = {
+export function startCollecting() {
+  sdk.start()
+    .then(() => console.log('Tracing initialized'))
+    .then(() => startServering())
+}
 
-  startCollecting: () => {
-    sdk.start()
-      .then(() => console.log('Tracing initialized'))
-      .then(() => startServering())
-  },
-  
-  getFinishedSpans: () => {
-    return traceExporter.getFinishedSpans()
-  }
-
+export function getFinishedSpans() {
+  return traceExporter.getFinishedSpans()
 }
