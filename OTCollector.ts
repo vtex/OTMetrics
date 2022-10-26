@@ -14,12 +14,16 @@ const sdk = new opentelemetry.NodeSDK({
   ]
 });
 
-export function startCollecting() {
-  sdk.start()
-    .then(() => console.log('Tracing initialized'))
-    .then(() => startServering())
-}
+module.exports = {
 
-export function getFinishedSpans() {
-  return traceExporter.getFinishedSpans()
+  startCollecting: () => {
+    sdk.start()
+      .then(() => console.log('Tracing initialized'))
+      .then(() => startServering())
+  },
+  
+  getFinishedSpans: () => {
+    return traceExporter.getFinishedSpans()
+  }
+
 }
