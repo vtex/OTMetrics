@@ -1,7 +1,7 @@
 import { ReadableSpan } from '@opentelemetry/sdk-trace-base'
 
-export function biggestLatency( spans: ReadableSpan[] ){
-    let biggest : ReadableSpan | null  = null;
+export function biggestLatency( spans ){
+    let biggest = null;
 
     spans.forEach((span) => {
         if(span.duration > ( biggest?.duration ?? 0 )) {
