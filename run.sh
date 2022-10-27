@@ -1,2 +1,2 @@
 #!/bin/sh
-rimraf ./build && tsc && node build/index.js
+rm -rf ./build && tsc && node build/index.js
