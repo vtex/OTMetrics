@@ -1,5 +1,3 @@
-import { ReadableSpan } from '@opentelemetry/sdk-trace-base'
-
 export function biggestLatency( spans ){
     let biggest = null;
 
