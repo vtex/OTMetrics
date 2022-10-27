@@ -3,7 +3,7 @@
 import opentelemetry from '@opentelemetry/sdk-node'
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 
-import { startServering } from './OTStarter'
+import { startServering } from './OTStarter.js'
 
 const traceExporter = new opentelemetry.tracing.InMemorySpanExporter()
 

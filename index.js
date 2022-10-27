@@ -1,5 +1,5 @@
 import { startCollecting, getFinishedSpans } from "./OTCollector.js"
-import { startProcessing } from "./OTProcessor"
+import { startProcessing } from "./OTProcessor.js"
 
 startCollecting()
 
