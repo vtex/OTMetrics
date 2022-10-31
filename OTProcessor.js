@@ -1,9 +1,16 @@
 import { biggestLatency } from './functions.js'
+import { spanToString } from './utils.js'
 
 export function startProcessing( spans ) {
-    let text = '\n\n ===== OTMetrics ===== \n';
+    let text = '\n\n ◦◦◦◦◦◦◦◦ OTMETRICS ◦◦◦◦◦◦◦◦ \n';
 
-    text += '\n - Maior latência: ' + biggestLatency(spans)
+    if(spans.length > 0 ) {
 
-    return text;
+        text += '\n ➜ Maior latência: \n' + spanToString(biggestLatency(spans))
+
+    } else {
+        text += '\n ✕ Nenhum tracing capturado'
+    }
+
+    return text + '\n';
 }

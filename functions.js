@@ -1,8 +1,11 @@
 export function biggestLatency( spans ){
-    let biggest = null;
+
+    let biggest = spans[0];
+
+    console.log(spans)
 
     spans.forEach((span) => {
-        if(span.duration > ( biggest?.duration ?? 0 )) {
+        if( span.duration[1] > biggest.duration[1]) {
             biggest == span
         }
     })
