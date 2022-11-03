@@ -44,7 +44,7 @@ function getStatusOfRequests(spans) {
     text += '\n\n     - Request com erros:'
     
     errorRequests.forEach((span) => {
-        text += `       ${span.name} ${span.attributes?.['http.url'] ? '- ' + span.attributes?.['http.url'] : ''}\n`
+        text += `\n       ${span.name} ${span.attributes?.['http.url'] ? '- ' + span.attributes?.['http.url'] : ''}`
     })
 
     return text
