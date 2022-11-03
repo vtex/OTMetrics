@@ -1,5 +1,5 @@
 import { biggestLatency, statusOfRequests } from './functions.js'
-import { nanoToSec, spanToString, translateSpanKind } from './utils.js'
+import { nanoToSec, translateSpanKind } from './utils.js'
 
 export function startProcessing( spans ) {
     let text = '\n\n ◦◦◦◦◦◦◦◦ OTMETRICS ◦◦◦◦◦◦◦◦ \n';
