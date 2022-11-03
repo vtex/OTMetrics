@@ -35,11 +35,17 @@ function getBiggestLatency(spans) {
 function getStatusOfRequests(spans) {
     let text = '\n ➜ Relatório de Requests: \n'
 
-    let { ok, error, unSet } = statusOfRequests(spans)
+    let { ok, error, errorRequests, unSet } = statusOfRequests(spans)
 
     text += `   ‧ Com sucesso: ${ok}\n`
     text += `   ‧ Com erro: ${error}\n`
     text += `   ‧ Não setadas: ${unSet}`
+
+    text += '\n\n     - Request com erros:'
+    
+    errorRequests.forEach((span) => {
+        text += `       ${span.name} ${span.attributes?.['http.url'] ? '- ' + span.attributes?.['http.url'] : ''}\n`
+    })
 
     return text
 }

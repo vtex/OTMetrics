@@ -15,17 +15,22 @@ export function statusOfRequests( spans ){
 
     let ok = 0;
     let error = 0;
+    let errorRequests = [];
     let unSet = 0;
 
     spans.forEach((span) => {
         if( span.status.code == 0) unSet += 1
         else if( span.status.code == 1) ok += 1
-        else if( span.status.code == 2) error += 1
+        else if( span.status.code == 2) { 
+            error += 1
+            errorRequests.push(span)
+        }
     })
 
     return {
         ok,
         error,
+        errorRequests,
         unSet
     }
 }
