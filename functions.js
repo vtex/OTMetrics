@@ -1,9 +1,13 @@
+import { nanoToSec } from "./utils";
+
 export function biggestLatency( spans ){
 
-    let biggest = spans[0];
+    let biggest;
 
     spans.forEach((span) => {
-        if( span.duration[1] > biggest.duration[1]) {
+
+        if( !biggest ) biggest = span;
+        else if( span.duration[1] > biggest.duration[1]) {
             biggest == span
         }
     })
@@ -32,5 +36,34 @@ export function statusOfRequests( spans ){
         error,
         errorRequests,
         unSet
+    }
+}
+
+export function requestsPerSecond( spans ) {
+    
+    let firstToHappen;
+    
+    spans.forEach((span) => {
+        if( !firstToHappen ) firstToHappen = span
+        else if( span.startTime[1] < firstToHappen.startTime[1] ) {
+            firstToHappen = span
+        }
+    })    
+    
+    let lastToHappen;
+
+    spans.forEach((span) => {
+        if( !lastToHappen ) lastToHappen = span
+        else if( span.endTime[1] > lastToHappen.endTime[1] ) {
+            lastToHappen = span
+        }
+    })
+
+    if( firstToHappen && lastToHappen ) {
+        let timeLapse = lastToHappen.endTime[1] - firstToHappen.startTime[1]
+        
+        return nanoToSec(
+            timeLapse / spans.length
+        )
     }
 }
