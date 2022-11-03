@@ -56,4 +56,5 @@ function getStatusOfRequests(spans) {
 
 function getRequestsPerSecond(spans) {
     let text = `\n ➜ Requisições por segundo: ${ requestsPerSecond(spans) } segundos`
+    return text
 }
