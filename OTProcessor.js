@@ -2,11 +2,15 @@ import { biggestLatency, statusOfRequests } from './functions.js'
 import { nanoToSec, translateSpanKind } from './utils.js'
 
 export function startProcessing( spans ) {
+
+    console.log(spans)
+
     let text = '\n\n ◦◦◦◦◦◦◦◦ OTMETRICS ◦◦◦◦◦◦◦◦ \n';
 
     if(spans.length > 0 ) {
         
         text += getStatusOfRequests(spans)
+        text += '\n'
         text += getBiggestLatency(spans)
 
     } else {
@@ -21,7 +25,7 @@ function getBiggestLatency(spans) {
 
     let biggestSpan = biggestLatency(spans)
 
-    text += `     Nome: ${biggestSpan.name} ${biggestSpan.attributes?.['http.url'] && '- ' + biggestSpan.attributes?.['http.url']}\n`
+    text += `     Nome: ${biggestSpan.name} ${biggestSpan.attributes?.['http.url'] ? '- ' + biggestSpan.attributes?.['http.url'] : ''}\n`
     text += `     Duração: ${nanoToSec(biggestSpan.duration[1]).toFixed(5)} seconds\n`
     text += `     Tipo: ${translateSpanKind(biggestSpan.kind)}`
 
