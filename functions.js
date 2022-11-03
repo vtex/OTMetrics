@@ -1,4 +1,4 @@
-import { nanoToSec } from "./utils";
+import { nanoToSec } from "./utils.js";
 
 export function biggestLatency( spans ){
 
