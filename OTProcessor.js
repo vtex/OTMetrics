@@ -1,60 +1,24 @@
-import { biggestLatency, requestsPerSecond, statusOfRequests } from './functions.js'
-import { nanoToSec, translateSpanKind } from './utils.js'
+import { formatDistance } from 'date-fns'
+import { ptBR } from 'date-fns/locale/index.js'
+import * as metrics from './metrics/index.js'
 
-export function startProcessing( spans ) {
+export async function startProcessing( spans, startDate, endDate ) {
 
-    console.log(spans)
+    let text = '\n\n•••••••••••• OTMETRICS ••••••••••••';
 
-    let text = '\n\n ◦◦◦◦◦◦◦◦ OTMETRICS ◦◦◦◦◦◦◦◦ \n';
-
+    text += `\n\n ‧ Coletando ${formatDistance(startDate, endDate, { includeSeconds: true, addSuffix: true, locale: ptBR })}.`
+    text += `\n ‧ Recebemos ${ spans.length } tracing(s)!`
+    
     if(spans.length > 0 ) {
         
-        text += getStatusOfRequests(spans)
-        text += '\n'
-        text += getBiggestLatency(spans)
-        text += '\n'
-        text += getRequestsPerSecond(spans)
+        text += '\n\n•••••• RELATÓRIO'
 
-    } else {
-        text += '\n ✕ Nenhum tracing capturado'
+        await Promise.all(
+            Object.entries(metrics).map(([ _, func ]) =>
+              text += '\n' + func(spans)
+            )
+        )
     }
 
     return text + '\n';
-}
-
-function getBiggestLatency(spans) {    
-    let text = '\n ➜ Maior latência: \n'
-
-    let biggestSpan = biggestLatency(spans)
-
-    text += `     Nome: ${biggestSpan.name} ${biggestSpan.attributes?.['http.url'] ? '- ' + biggestSpan.attributes?.['http.url'] : ''}\n`
-    text += `     Duração: ${nanoToSec(biggestSpan.duration[1]).toFixed(5)} segundos\n`
-    text += `     Tipo: ${translateSpanKind(biggestSpan.kind)}`
-
-    return text
-}
-
-function getStatusOfRequests(spans) {
-    let text = '\n ➜ Relatório de Requisições: \n'
-
-    let { ok, error, errorRequests, unSet } = statusOfRequests(spans)
-
-    text += `   ‧ Com sucesso: ${ok}\n`
-    text += `   ‧ Com erro: ${error}\n`
-    text += `   ‧ Não setadas: ${unSet}`
-
-    if(errorRequests.length > 0) {
-        text += '\n\n     - Requisições com erros:'
-    }
-    
-    errorRequests.forEach((span) => {
-        text += `\n       ${span.name} ${span.attributes?.['http.url'] ? '- ' + span.attributes?.['http.url'] : ''}`
-    })
-
-    return text
-}
-
-function getRequestsPerSecond(spans) {
-    let text = `\n ➜ Requisições por segundo: ${ requestsPerSecond(spans) } segundos`
-    return text
 }

@@ -1,18 +1,23 @@
 import { startCollecting, getFinishedSpans } from "./OTCollector.js"
 import { startProcessing } from "./OTProcessor.js"
 
-startCollecting()
+const startDate = await startCollecting()
 
-function onInterrupt() {
+async function onInterrupt() {
+
+    const endDate = Date.now()
+
     console.log(
-        startProcessing(
-            getFinishedSpans()
+        await startProcessing(
+            getFinishedSpans(), 
+            startDate,
+            endDate
         )
     )
 
     process.exit();
 }
   
-process.on('SIGINT', onInterrupt)  // CTRL+C
-process.on('SIGQUIT', onInterrupt) // Keyboard quit
-process.on('SIGTERM', onInterrupt) // `kill` command
+process.on('SIGINT', await onInterrupt)  // CTRL+C
+process.on('SIGQUIT', await onInterrupt) // Keyboard quit
+process.on('SIGTERM', await onInterrupt) // `kill` command
