@@ -1,4 +1,4 @@
-import { nanoToSec } from "../utils.js";
+import { hrTimeToMilliseconds, milliToSec } from "../utils.js";
 
 export function getRequestsPerSecond(spans) {
     let text = `\n ➜ Requisições por segundo:`
@@ -14,11 +14,11 @@ function requestsPerSecond( spans ) {
     let lastToHappen = spans[0];
     
     spans.forEach((span) => {
-        if( span.startTime[0] < firstToHappen.startTime[0] ) {
+        if( hrTimeToMilliseconds(span.startTime) < hrTimeToMilliseconds(firstToHappen.startTime) ) {
             firstToHappen = span
         }
 
-        if( span.endTime[0] > lastToHappen.endTime[0] ) {
+        if( hrTimeToMilliseconds(span.endTime) > hrTimeToMilliseconds(lastToHappen.endTime) ) {
             lastToHappen = span
         }
     })    
@@ -28,7 +28,7 @@ function requestsPerSecond( spans ) {
     return {
         firstToHappen,
         lastToHappen,
-        perSecond: nanoToSec(timeLapse) / spans.length
+        perSecond: milliToSec(timeLapse) / spans.length
     }
 
 }

@@ -1,6 +1,8 @@
-export function nanoToSec(nanoseconds) {
-    return nanoseconds / 1000000000
-}
+import opentelemetry from '@opentelemetry/sdk-node'
+
+export const milliToSec = ( milliseconds ) => milliseconds / 1000
+
+export const hrTimeToMilliseconds = ( time ) => new opentelemetry.core.hrTimeToMilliseconds(time)
 
 export function translateSpanKind(kind) {
     if( kind == 0 ) return 'INTERNO'
@@ -9,3 +11,4 @@ export function translateSpanKind(kind) {
     else if( kind == 3 ) return 'PRODUTOR'
     else if( kind == 4 ) return 'CONSUMIDOR'
 }
+
