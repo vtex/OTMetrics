@@ -12,7 +12,14 @@ export function getStatusOfRequests(spans) {
     }
     
     errorRequests.forEach((span) => {
-        text += `\n       ${span.name} ${span.attributes?.['http.url'] ? '- ' + span.attributes?.['http.url'] : ''}`
+        
+        let infos = [
+            span.name,
+            span.attributes?.['http.url'] || '',
+            span.status?.message || ''
+        ]
+
+        text += '\n       ' + infos.toString().replaceAll(',', ' - ')
     })
 
     return text

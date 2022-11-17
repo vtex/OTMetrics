@@ -10,9 +10,9 @@ export async function startProcessing( spans, startDate, endDate ) {
 
     text += '\n\n•••••• INFORMAÇÕES'
 
-    text += '\n\n ‧ Início ' + format(startDate, 'dd/MM/yyyy HH:mm:ss')
-    text += '\n ‧ Fim ' + format(endDate, 'dd/MM/yyyy HH:mm:ss')
-    text += '\n ‧ Duração ' + formatDistance(startDate, endDate, { includeSeconds: true, locale: ptBR })
+    text += '\n\n ‧ Início: ' + format(startDate, 'dd/MM/yyyy HH:mm:ss')
+    text += '\n ‧ Fim: ' + format(endDate, 'dd/MM/yyyy HH:mm:ss')
+    text += '\n ‧ Duração: ' + formatDistance(startDate, endDate, { includeSeconds: true, locale: ptBR })
     
     text += '\n\n ‧ Durante este periodo foram capturados ' + spans.length + ' tracing(s)!'
     
