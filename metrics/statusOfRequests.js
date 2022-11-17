@@ -1,5 +1,5 @@
 export function getStatusOfRequests(spans) {
-    let text = '\n ➜ Relatório de Requisições:'
+    let text = '\n ➜ Status das Requisições:'
 
     let { ok, error, errorRequests, unSet } = statusOfRequests(spans)
 
@@ -13,13 +13,12 @@ export function getStatusOfRequests(spans) {
     
     errorRequests.forEach((span) => {
         
-        let infos = [
-            span.name,
-            span.attributes?.['http.url'] || '',
-            span.status?.message || ''
-        ]
-
-        text += '\n       ' + infos.toString().replaceAll(',', ' - ')
+        let name = span.name
+        let link = span.attributes?.['http.url'] ? ' - ' + span.attributes['http.url'] : ''
+        let errorMessage = span.status?.message ? ' - ' + span.status.message : ''
+        
+        text += `\n       ${name} ${link}`
+        text += `\n              Mensagem de erro recebida: ${errorMessage}`
     })
 
     return text
