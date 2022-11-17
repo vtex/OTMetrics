@@ -6,7 +6,7 @@ import next from 'next'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const projectPath = __dirname.replace('/node_modules/otmetrics', '')
 
-const dev = process.env.NODE_ENV == 'development'
+const dev = process.env.NODE_ENV !== 'production'
 const hostname = 'localhost'
 const port = 3000
 
