@@ -11,6 +11,8 @@ export function getAboutVisitedPages( spans ) {
 function visitedPages(spans) {
     return spans.filter((span) => {
         let link = span.attributes?.['http.url']
+        
+        if(!link) return false
         return link.includes('localhost:3000') && !link.includes('localhost:3000/_next')
     })
 }
