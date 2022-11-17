@@ -31,8 +31,8 @@ async function takeAllMetricsAndRun(spans) {
     let text = ''
 
     await Promise.all(
-        Object.entries(metrics).map(async ([ _, func ]) =>
-          text += '\n' + await func(spans)
+        Object.entries(metrics).map(([ _, func ]) =>
+          text += '\n' + func(spans)
         )
     )
 
