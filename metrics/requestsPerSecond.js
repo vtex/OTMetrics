@@ -1,7 +1,7 @@
 import { hrTimeToMilliseconds, milliToSec } from "../utils.js";
 
-export function getRequestsPerSecond(spans) {
-    let text = `\n ➜ Requisições por segundo:`
+export function getRequestsPerSecond(spans, startDate, endDate) {
+    let text = `\n ➜ Atividades por segundo:`
 
     let { firstToHappen, lastToHappen, perSecond } = requestsPerSecond(spans)
 
