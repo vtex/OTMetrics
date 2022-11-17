@@ -6,7 +6,7 @@ export async function startProcessing( spans, startDate, endDate ) {
 
     let text = '\n\n•••••••••••• OTMETRICS ••••••••••••';
 
-    text += '\nUm pacote NodeJs instalável e funcional para aplicações em NextJS. Que, ao ser executado, disponibiliza uma versão local da aplicação para ser executada e depois disso monitora o servidor da aplicação para verificar seu funcionamento, o que chega e sai dele.'
+    text += '\n\nUm pacote NodeJs instalável e funcional para aplicações em NextJS. Que, ao ser executado, disponibiliza uma versão local da aplicação para ser executada e depois disso monitora o servidor da aplicação para verificar seu funcionamento, o que chega e sai dele.'
 
     text += '\n\n•••••• INFORMAÇÕES'
 
