@@ -2,7 +2,7 @@ import opentelemetry from '@opentelemetry/sdk-node'
 
 export const milliToSec = ( milliseconds ) => milliseconds / 1000
 
-export const hrTimeToMilliseconds = ( time ) => new opentelemetry.core.hrTimeToMilliseconds(time)
+export const hrTimeToMilliseconds = ( time ) => opentelemetry.core.hrTimeToMilliseconds(time)
 
 export function translateSpanKind(kind) {
     if( kind == 0 ) return 'INTERNO'
