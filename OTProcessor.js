@@ -1,4 +1,4 @@
-import { formatDistance } from 'date-fns'
+import { formatDistance, format } from 'date-fns'
 import { ptBR } from 'date-fns/locale/index.js'
 import * as metrics from './metrics/index.js'
 
