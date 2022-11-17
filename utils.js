@@ -11,4 +11,3 @@ export function translateSpanKind(kind) {
     else if( kind == 3 ) return 'PRODUTOR'
     else if( kind == 4 ) return 'CONSUMIDOR'
 }
-

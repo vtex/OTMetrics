@@ -10,22 +10,31 @@ export async function startProcessing( spans, startDate, endDate ) {
 
     text += '\n\n•••••• INFORMAÇÕES'
 
-    text += `\n\n ‧ Início ${format(startDate, 'dd/MM/yyyy HH:mm:ss')}`
-    text += `\n ‧ Fim ${format(endDate, 'dd/MM/yyyy HH:mm:ss')}`
-    text += `\n ‧ Duração ${formatDistance(startDate, endDate, { includeSeconds: true, locale: ptBR })}.`
+    text += '\n\n ‧ Início ' + format(startDate, 'dd/MM/yyyy HH:mm:ss')
+    text += '\n ‧ Fim ' + format(endDate, 'dd/MM/yyyy HH:mm:ss')
+    text += '\n ‧ Duração ' + formatDistance(startDate, endDate, { includeSeconds: true, locale: ptBR })
     
-    text += `\n\n ‧ Durante este periodo foram capturados ${ spans.length } tracing(s)!`
+    text += '\n\n ‧ Durante este periodo foram capturados ' + spans.length + 'tracing(s)!'
     
     if(spans.length > 0 ) {
         
         text += '\n\n•••••• RELATÓRIO'
 
-        await Promise.all(
-            Object.entries(metrics).map(([ _, func ]) =>
-              text += '\n' + func(spans)
-            )
-        )
+        text += await takeAllMetricsAndRun()
     }
 
     return text + '\n';
+}
+
+async function takeAllMetricsAndRun() {
+
+    let text = ''
+
+    await Promise.all(
+        Object.entries(metrics).map(([ _, func ]) =>
+          text += '\n' + func(spans)
+        )
+    )
+
+    return text
 }
