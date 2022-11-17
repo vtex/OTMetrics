@@ -20,13 +20,13 @@ export async function startProcessing( spans, startDate, endDate ) {
         
         text += '\n\n•••••• RELATÓRIO'
 
-        text += await takeAllMetricsAndRun()
+        text += await takeAllMetricsAndRun(spans)
     }
 
     return text + '\n';
 }
 
-async function takeAllMetricsAndRun() {
+async function takeAllMetricsAndRun(spans) {
 
     let text = ''
 
