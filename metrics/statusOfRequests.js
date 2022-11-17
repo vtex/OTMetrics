@@ -8,17 +8,19 @@ export function getStatusOfRequests(spans) {
     text += `\n   ‧ Não setadas: ${unSet}`
 
     if(errorRequests.length > 0) {
-        text += '\n\n     - Requisições com erros:'
+        text += '\n\n     ‧ Requisições com erros:'
     }
     
     errorRequests.forEach((span) => {
         
         let name = span.name
-        let link = span.attributes?.['http.url'] ? ' - ' + span.attributes['http.url'] : ''
-        let errorMessage = span.status?.message ? ' - ' + span.status.message : ''
+        let link = span.attributes?.['http.url'] ? '- ' + span.attributes['http.url'] : ''
+        let errorMessage = span.status?.message ? '- ' + span.status.message : ''
         
-        text += `\n       ${name} ${link}`
-        text += `\n              Mensagem de erro recebida: ${errorMessage}`
+        text += `\n\n        - ${name} ${link}`
+        
+        if (errorMessage !== '') text += `\n          Erro: ${errorMessage}`
+        
     })
 
     return text
