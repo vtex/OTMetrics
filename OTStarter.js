@@ -1,9 +1,7 @@
 import { createServer } from 'http'
-import { parse } from 'url'
+import { parse, fileURLToPath } from 'url'
 import next from 'next'
-
 import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectPath = __dirname.replace('/node_modules/otmetrics', '')
