@@ -6,8 +6,15 @@ export async function startProcessing( spans, startDate, endDate ) {
 
     let text = '\n\n•••••••••••• OTMETRICS ••••••••••••';
 
-    text += `\n\n ‧ Coletando ${formatDistance(startDate, endDate, { includeSeconds: true, addSuffix: true, locale: ptBR })}.`
-    text += `\n ‧ Recebemos ${ spans.length } tracing(s)!`
+    text += '\nUm pacote NodeJs instalável e funcional para aplicações em NextJS. Que, ao ser executado, disponibiliza uma versão local da aplicação para ser executada e depois disso monitora o servidor da aplicação para verificar seu funcionamento, o que chega e sai dele.'
+
+    text += '\n\n•••••• INFORMAÇÕES'
+
+    text += `\n\n ‧ Início ${format(startDate, 'dd/MM/yyyy HH:mm:ss')}`
+    text += `\n ‧ Fim ${format(endDate, 'dd/MM/yyyy HH:mm:ss')}`
+    text += `\n ‧ Duração ${formatDistance(startDate, endDate, { includeSeconds: true, locale: ptBR })}.`
+    
+    text += `\n\n ‧ Durante este periodo foram capturados ${ spans.length } tracing(s)!`
     
     if(spans.length > 0 ) {
         
