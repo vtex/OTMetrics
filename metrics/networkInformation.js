@@ -6,7 +6,7 @@ export function getNetworkInformation(spans) {
     print(arrow() + 'Informações de Rede')
     jumpOneLine()
 
-    print(tab() + 'Para a montagem do servidor alguns processos são executados para garantir o funcionamento.')
+    print(tab(2) + 'Para a montagem do servidor alguns processos são executados para garantir o funcionamento.')
 
     let networkSpans = [
         { name: 'DNS',  spanName: 'dns.lookup'},
