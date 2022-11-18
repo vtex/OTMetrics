@@ -8,9 +8,9 @@ export function getStatusOfRequests(spans) {
     print(arrow() + 'Status das Requisições:')
     jumpOneLine()
 
-    print(tab() + dot() + 'Não informadas:', unSet) 
-    print(tab() + dot() + 'Com sucesso:', ok)
-    print(tab() + dot() + 'Com erro:', error)
+    print(tab() + dot() + ok, 'traces com status de SUCESSO')
+    print(tab() + dot() + error, 'traces com status de ERRO')
+    print(tab() + dot() + unSet, 'traces não receberam status de sucesso ou erro') 
 
     if(errorRequests.length > 0) {
         jumpOneLine()
