@@ -1,29 +1,35 @@
+import { arrow, dot, jumpOneLine, line, print, tab } from '../utils.js'
+
 export function getStatusOfRequests(spans) {
-    let text = '\n ➜ Status das Requisições:'
 
     let { ok, error, errorRequests, unSet } = statusOfRequests(spans)
+    
+    jumpOneLine()
+    print(arrow() + 'Status das Requisições:')
+    jumpOneLine()
 
-    text += `\n   ‧ Com sucesso: ${ok}`
-    text += `\n   ‧ Com erro: ${error}`
-    text += `\n   ‧ Não setadas: ${unSet}`
+    print(tab() + dot() + 'Não informadas:', unSet) 
+    print(tab() + dot() + 'Com sucesso:', ok)
+    print(tab() + dot() + 'Com erro:', error)
 
     if(errorRequests.length > 0) {
-        text += '\n\n     ‧ Requisições com erros:'
+        jumpOneLine()
+        print(tab(2) + 'Requisições com erros:')
     }
     
     errorRequests.forEach((span) => {
         
         let name = span.name
         let link = span.attributes?.['http.url'] ? '- ' + span.attributes['http.url'] : ''
-        let errorMessage = span.status?.message ? '- ' + span.status.message : ''
+        let hasError = !!span.status?.message
+        let errorMessage = hasError ? span.status.message : ''
         
-        text += `\n\n        - ${name} ${link}`
-        
-        if (errorMessage !== '') text += `\n          Erro: ${errorMessage}`
+        jumpOneLine()
+        print(tab(2) + line() + name, link)
+
+        if (hasError) print(tab(3) + 'Erro:', errorMessage)
         
     })
-
-    return text
 }
 
 function statusOfRequests( spans ){

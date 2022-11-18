@@ -1,19 +1,25 @@
-import { hrTimeToMilliseconds, milliToSec, translateSpanKind } from '../utils.js'
+import { hrTimeToMilliseconds, jumpOneLine, milliToSec, print, translateSpanKind, tab, arrow } from '../utils.js'
 
 export function getBiggestLatency( spans ) {
-    let text = '\n ➜ Maior latência:'
     
     let biggestSpan = biggestLatency(spans)
     
     let latency = milliToSec(
         hrTimeToMilliseconds( biggestSpan.duration )
     )
-
-    text += `\n     Nome: ${biggestSpan.name} ${biggestSpan.attributes?.['http.url'] ? '- ' + biggestSpan.attributes?.['http.url'] : ''}`
-    text += `\n     Duração: ${ latency.toFixed(5)} segundos`
-    text += `\n     Tipo: ${translateSpanKind(biggestSpan.kind)}`
     
-    return text
+    let name = biggestSpan.name
+    let link = biggestSpan.attributes?.['http.url'] ? '- ' + biggestSpan.attributes?.['http.url'] : ''
+    let latencyFixed = latency.toFixed(5).replace('.', ',')
+    let kind = translateSpanKind(biggestSpan.kind)
+    
+    jumpOneLine()
+    print(arrow() + 'Maior latência:')
+    jumpOneLine()
+
+    print(tab(2) + 'Nome:', name, link)
+    print(tab(2) + 'Duração:', latencyFixed, 'segundos')
+    print(tab(2) + 'Tipo:', kind)
 }
 
 function biggestLatency( spans ){

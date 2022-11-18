@@ -7,12 +7,10 @@ async function onInterrupt() {
 
     const endDate = Date.now()
 
-    console.log(
-        await startProcessing(
-            getFinishedSpans(), 
-            startDate,
-            endDate
-        )
+    await startProcessing(
+        getFinishedSpans(), 
+        startDate,
+        endDate
     )
 
     process.exit();
