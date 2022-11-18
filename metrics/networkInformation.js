@@ -1,4 +1,4 @@
-import { arrow, jumpOneLine, print, tab } from '../utils.js'
+import { arrow, jumpOneLine, print, tab, dot } from '../utils.js'
 
 export function getNetworkInformation(spans) {
 
