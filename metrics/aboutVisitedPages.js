@@ -10,9 +10,11 @@ export function getAboutVisitedPages( spans ) {
     print(arrow() + 'Páginas Visitadas:')
     jumpOneLine()
 
+    let average = (totalOfTraces/pages.length).toFixed(3).replace('.', ',')
+
     print(tab(2) + 'Durante o uso você visitou', pages.length, 'página(s)!')
     print(tab(2) + 'Este acesso trouxe', totalOfTraces, 'requisição(ões) para o servidor.')
-    print(tab(2) + 'A média de requisições por página foi:', totalOfTraces/pages.length)
+    print(tab(2) + 'A média de requisições por página foi:', average)
 
     jumpOneLine()
 
@@ -68,5 +70,5 @@ function getTracesOfPages(pages, spans) {
         })
     })
 
-    return [ traces, total]
+    return [ traces, total ]
 }
