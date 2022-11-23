@@ -6,11 +6,11 @@
   "repository": "https://github.com/andremedeiro/OTMetrics.git",
   "author": "André Martins <andre.lucas.medeir@gmail.com>",
   "license": "MIT",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "@opentelemetry/auto-instrumentations-node": "^0.33.1",
     "@opentelemetry/sdk-node": "^0.33.0",
     "@opentelemetry/sdk-trace-base": "^1.7.0",
     "date-fns": "^2.29.3"
-  },
-  "devDependencies": {}
+  }
 }
