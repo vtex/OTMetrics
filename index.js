@@ -5,11 +5,7 @@ import { startExercising } from "./OTExecutor.js"
 import { dotLine, jumpOneLine, print } from './utils.js'
 
 const { serverIsListening, hostname, port } = await startCollecting()
-const startDate = Date.now()    
-
-export function cli(args) {
-    console.log(args);
-}
+const startDate = Date.now()
 
 if( serverIsListening ) {
     

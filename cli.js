@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-
-import { cli } from './index.js'
+function cli(args) {
+    console.log(args);    
+}
 
 cli(process.argv);
