@@ -16,9 +16,14 @@ const handle = app.getRequestHandler()
 export async function startServering() {
   return app.prepare()
     .then(() => {
-      createServer( async (req, res) => await handle(req, res, parse(req.url, true)))
-        .listen(port, () => {
-          console.log(`> Ready on http://${hostname}:${port}`)
-        })
+      let server = createServer( async (req, res) => await handle(req, res, parse(req.url, true)))
+      server.listen(port)
+  
+      return {
+        serverIsListening: server.listening,
+        hostname: hostname,
+        port: port,
+      }
+
     })
 }
