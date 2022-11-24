@@ -12,5 +12,8 @@
     "@opentelemetry/sdk-trace-base": "^1.7.0",
     "date-fns": "^2.29.3",
     "inquirer": "^9.1.4"
+  },
+  "bin": {
+    "otmetrics": "./cli.js"
   }
 }
