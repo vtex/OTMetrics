@@ -1,5 +1,4 @@
 #!/usr/bin/env node
 
-export function cli(args) {
-    console.log(args);
-}
+require = require('esm')(module /*, options*/);
+require('./cli').cli(process.argv);
