@@ -1,2 +1,5 @@
 #!/usr/bin/env node
-console.log('instalou esse modulo')
+
+export function cli(args) {
+    console.log(args);
+}
