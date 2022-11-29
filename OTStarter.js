@@ -11,16 +11,16 @@ export async function startServering(projectPath) {
   const app = next({ dev, hostname, port, dir: projectPath })
   const handle = app.getRequestHandler()
 
-  return app.prepare()
-    .then(() => {
-      let server = createServer( async (req, res) => await handle(req, res, parse(req.url, true)))
-      server.listen(port)
-  
-      return {
-        serverIsListening: server.listening,
-        hostname: hostname,
-        port: port,
-      }
+  try {
 
-    })
+    await app.prepare()
+    let server = createServer( async (req, res) => await handle(req, res, parse(req.url, true)))
+    server.listen(port)
+
+    return server.listening
+
+  } catch(error) {
+    console.log(error)
+  }
+    
 }

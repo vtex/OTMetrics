@@ -54,13 +54,14 @@ try {
         process.exit()
     }
 
-    startOTMetrics(absolutePath)
+    await startOTMetrics(absolutePath)
 
     process.exit()
 
-} catch {
+} catch(error) {
     jumpOneLine()
     showError()
+    print(error)
     process.exit()    
 }
 
