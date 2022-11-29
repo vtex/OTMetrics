@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-function cli(args) {
-    console.log(args);    
-}
+import { startCommunication } from './OTConversational.js'
 
-cli(process.argv);
+startCommunication()
