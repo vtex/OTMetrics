@@ -14,9 +14,9 @@ const sdk = new opentelemetry.NodeSDK({
   ]
 });
 
-export async function startCollecting() {
+export async function startCollecting( projectPath ) {
   return await sdk.start()
-    .then(() => startServering())
+    .then(() => startServering(projectPath))
 }
 
 export function getFinishedSpans() {

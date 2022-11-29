@@ -42,8 +42,19 @@ export function asterisk() {
     return ' * '
 }
 
+export function close() {
+    return ' ✕ '
+}
+
 export function dotLine(number = 1) {
     return '•••'.repeat(number)
+}
+
+export function showError( message = 'Aconteceu algum erro inesperado!') {
+    print('✕✕✕ ERRO')
+    jumpOneLine()
+    print(close() + message)
+    jumpOneLine()
 }
 
 export function showDate(date) {
