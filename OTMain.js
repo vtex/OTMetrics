@@ -15,10 +15,10 @@ export async function startOTMetrics(projectPath) {
 
     const endDate = Date.now()
 
-    await startProcessing(
-        getFinishedSpans(),
-        startDate,
-        endDate
-    )
+    // await startProcessing(
+    //     getFinishedSpans(),
+    //     startDate,
+    //     endDate
+    // )
 
 }

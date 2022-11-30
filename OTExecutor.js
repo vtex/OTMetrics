@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import { dotLine, jumpOneLine, print, showError } from './utils'
+import { dotLine, jumpOneLine, print, showError } from './utils.js'
 
 export function startExercising(projectPath) {
 
@@ -8,7 +8,7 @@ export function startExercising(projectPath) {
     print(dotLine(2), 'EXECUTANDO')
     jumpOneLine()
     
-    print('▹ Mapeando página acessíveis...')
+    print('▹ Mapeando páginas acessíveis...')
     const pages = getProjectPages(projectPath + '/pages')
 
     if(pages.length === 0) {
@@ -16,8 +16,11 @@ export function startExercising(projectPath) {
         showError('Nenhuma página acessível encontrada. Não foi possível execitar o projeto')
         process.exit()
     }
+    print('▸ Páginas mapeadas!')
 
-    print('▸ Tudo OK!')
+    jumpOneLine()
+
+    print('▹ Acessando páginas...')
 }
 
 function getProjectPages(projectPath, route = '') {

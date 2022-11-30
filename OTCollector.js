@@ -2,7 +2,7 @@ import opentelemetry from '@opentelemetry/sdk-node'
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 
 import { startServering } from './OTStarter.js'
-import { jumpOneLine, print, showError } from './utils.js';
+import { dotLine, jumpOneLine, print, showError } from './utils.js';
 
 const traceExporter = new opentelemetry.tracing.InMemorySpanExporter()
 
@@ -21,6 +21,9 @@ export async function startCollecting(projectPath) {
   
   print('▹ Iniciando coletor...')
   await sdk.start()
+  print('▸ Coletor pronto!')
+
+  jumpOneLine()
 
   print('▹ Iniciando projeto...')
   let serverIsListening = await startServering(projectPath)
@@ -31,7 +34,7 @@ export async function startCollecting(projectPath) {
       process.exit()
   }
 
-  print('▸ Tudo OK!')
+  print('▸ Projeto pronto!')
   
 }
 
