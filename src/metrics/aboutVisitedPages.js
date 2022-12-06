@@ -1,4 +1,4 @@
-import { arrow, asterisk, jumpOneLine, line, print, tab } from '../utils.js'
+import { arrow, asterisk, jumpLine, line, print, tab } from '../utils/prompt.js'
 
 export function getAboutVisitedPages( spans ) {
 
@@ -6,9 +6,9 @@ export function getAboutVisitedPages( spans ) {
     
     let [ tracesOfPages, totalOfTraces] = getTracesOfPages(pages, spans)
 
-    jumpOneLine()
+    jumpLine()
     print(arrow() + 'Páginas Visitadas:')
-    jumpOneLine()
+    jumpLine()
 
     let average = (totalOfTraces/pages.length).toFixed(3).replace('.', ',')
 
@@ -16,7 +16,7 @@ export function getAboutVisitedPages( spans ) {
     print(tab(2) + 'Este acesso trouxe', totalOfTraces, 'requisição(ões) para o servidor.')
     print(tab(2) + 'A média de requisições por página foi:', average)
 
-    jumpOneLine()
+    jumpLine()
 
     print(tab(2) + 'Para mais detalhes, essas foram as requisições por página:')
 
@@ -25,7 +25,7 @@ export function getAboutVisitedPages( spans ) {
         let link = page.attributes['http.url']
         let spanId = page._spanContext.spanId
         
-        jumpOneLine()
+        jumpLine()
         print(tab(2) + line() + link)
 
         tracesOfPages[spanId].forEach((trace) => {
@@ -37,7 +37,7 @@ export function getAboutVisitedPages( spans ) {
 
     })
     
-    jumpOneLine()
+    jumpLine()
 
     print(tab(2) + asterisk() + 'Gostariamos de lembrar que em alguns casos não é proveitoso que uma página faça tantas requisições ao servidor para montar uma página. De acordo com a situação usar a técnica de SSG traga otimizações!')
 

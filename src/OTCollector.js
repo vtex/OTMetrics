@@ -2,7 +2,7 @@ import opentelemetry from '@opentelemetry/sdk-node'
 import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
 
 import { startServering } from './OTStarter.js'
-import { dotLine, jumpOneLine, print, showError } from './utils.js';
+import { dotLine, jumpLine, print, error } from './utils/prompt.js';
 
 const traceExporter = new opentelemetry.tracing.InMemorySpanExporter()
 
@@ -15,26 +15,28 @@ const sdk = new opentelemetry.NodeSDK({
 
 export async function startCollecting(projectPath) {
 
-  jumpOneLine()  
+  jumpLine()  
   print(dotLine(2), 'INICIANDO')
-  jumpOneLine()
+  jumpLine()
   
   print('▹ Iniciando coletor...')
   await sdk.start()
   print('▸ Coletor pronto!')
 
-  jumpOneLine()
+  jumpLine()
 
   print('▹ Iniciando projeto...')
-  let serverIsListening = await startServering(projectPath)
+  let { serverIsListening, url } = await startServering(projectPath)
   
   if(!serverIsListening) {
-      jumpOneLine()
-      showError('Por algum motivo o servidor não foi inicializado!')
+      jumpLine()
+      error('Por algum motivo o servidor não foi inicializado!')
       process.exit()
   }
 
   print('▸ Projeto pronto!')
+
+  return url
   
 }
 

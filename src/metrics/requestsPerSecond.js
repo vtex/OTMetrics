@@ -1,13 +1,14 @@
 import { isAfter, isBefore } from 'date-fns'
-import { arrow, dot, hrTimeToMilliseconds, hrTimeToTimeStamp, jumpOneLine, milliToSec, print, showDate, tab } from '../utils.js'
+import { arrow, dot, jumpLine, print, date, tab } from '../utils/prompt.js'
+import { hrTimeToMilliseconds, hrTimeToTimeStamp, milliToSec } from '../utils/telemetry.js'
 
 export function getRequestsPerSecond(spans) {
 
     let { firstToHappen, lastToHappen, perSecond } = requestsPerSecond(spans)
     
-    jumpOneLine()
+    jumpLine()
     print(arrow() + 'Atividade por segundo:')
-    jumpOneLine()
+    jumpLine()
 
     let name = firstToHappen.name
     let link = firstToHappen.attributes?.['http.url'] ? '- ' + firstToHappen.attributes['http.url'] : ''
@@ -15,8 +16,8 @@ export function getRequestsPerSecond(spans) {
 
     print(tab(2) + 'A primeira atividade a acontecer:')
     print(tab(3) + name, link)
-    print(tab(3) + 'Início:', showDate( hrTimeToTimeStamp(time) ))
-    jumpOneLine()
+    print(tab(3) + 'Início:', date( hrTimeToTimeStamp(time) ))
+    jumpLine()
 
     name = lastToHappen.name
     link = lastToHappen.attributes?.['http.url'] ? '- ' + lastToHappen.attributes['http.url'] : ''
@@ -24,8 +25,8 @@ export function getRequestsPerSecond(spans) {
 
     print(tab(2) + 'A última a acontecer:')
     print(tab(3) + name, link)
-    print(tab(3) + 'Fim:', showDate( hrTimeToTimeStamp(time) ))
-    jumpOneLine()
+    print(tab(3) + 'Fim:', date( hrTimeToTimeStamp(time) ))
+    jumpLine()
 
     let fixedPerSecond = perSecond.toFixed(3).replace('.', ',')
 

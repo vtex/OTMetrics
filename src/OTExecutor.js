@@ -1,26 +1,33 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import { dotLine, jumpOneLine, print, showError } from './utils.js'
+import { getPageContentHTML } from 'metrics-module2'
+import { dotLine, jumpLine, print, error } from './utils/prompt.js'
 
-export function startExercising(projectPath) {
+export function startExercising(projectPath, serverUrl) {
 
-    jumpOneLine()  
+    jumpLine()  
     print(dotLine(2), 'EXECUTANDO')
-    jumpOneLine()
+    jumpLine()
     
     print('▹ Mapeando páginas acessíveis...')
     const pages = getProjectPages(projectPath + '/pages')
 
     if(pages.length === 0) {
-        jumpOneLine()
-        showError('Nenhuma página acessível encontrada. Não foi possível execitar o projeto')
+        jumpLine()
+        error('Nenhuma página acessível encontrada. Não foi possível execitar o projeto')
         process.exit()
-    }
+    } 
     print('▸ Páginas mapeadas!')
 
-    jumpOneLine()
 
+    jumpLine()
     print('▹ Acessando páginas...')
+    
+    pages.forEach(async (page) => {
+        console.log(await getPageContentHTML(serverUrl + page))
+    })
+
+    print('▸ Páginas acessadas!')
 }
 
 function getProjectPages(projectPath, route = '') {
@@ -31,10 +38,15 @@ function getProjectPages(projectPath, route = '') {
     let filenames = fs.readdirSync(completePath)
 
     filenames.forEach((filename) => {
+
         let file = fs.lstatSync(resolve(completePath, filename))
-        
+
         if(file.isFile() && itsAFileTooSee(filename)) {
-            pages.push(route + '/' + filename)
+
+            let justName = filename.replace(/\.[^/.]+$/, "")
+
+            if(justName === 'index') pages.push(route + '/') 
+            else pages.push(route + '/' + justName)
         }
         
         else if(file.isDirectory() && itsADirectotyToSee(filename)) {

@@ -15,6 +15,9 @@ export async function startServering(projectPath) {
   let server = createServer( async (req, res) => await handle(req, res, parse(req.url, true)))
   server.listen(port)
 
-  return server.listening
+  return {
+    serverIsListening: server.listening,
+    url: `http://${hostname}:${port}`
+  }
      
 }
