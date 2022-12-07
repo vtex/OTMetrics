@@ -1,28 +1,28 @@
-import { print, jumpOneLine, tab, showDate, showDuration, dotLine} from './utils.js';
+import { print, jumpLine, tab, date, duration, dotLine} from './utils/prompt.js';
 import * as metrics from './metrics/index.js'
 
 export async function startProcessing( spans, startDate, endDate ) {
     
-    jumpOneLine()
+    jumpLine()
     print(dotLine(2), 'INFORMAÇÕES')
-    jumpOneLine()
+    jumpLine()
 
-    print(tab() + 'Início:', showDate(startDate))
-    print(tab() + 'Fim:', showDate(endDate))
-    print(tab() + 'Duração:', showDuration(startDate, endDate))
-    jumpOneLine()
+    print(tab() + 'Início:', date(startDate))
+    print(tab() + 'Fim:', date(endDate))
+    print(tab() + 'Duração:', duration(startDate, endDate))
+    jumpLine()
 
     print(tab() + 'Durante este periodo foram capturados', spans.length, 'tracing(s)!')
 
     if(spans.length > 0 ) {
         
-        jumpOneLine()
+        jumpLine()
         print(dotLine(2), 'RELATÓRIO')
 
         await takeAllMetricsAndRun(spans)
     }
 
-    jumpOneLine()
+    jumpLine()
 }
 
 async function takeAllMetricsAndRun(spans) {

@@ -1,19 +1,19 @@
-import { arrow, dot, jumpOneLine, line, print, tab } from '../utils.js'
+import { arrow, dot, jumpLine, line, print, tab } from '../utils/prompt.js'
 
 export function getStatusOfRequests(spans) {
 
     let { ok, error, errorRequests, unSet } = statusOfRequests(spans)
     
-    jumpOneLine()
+    jumpLine()
     print(arrow() + 'Status das Requisições:')
-    jumpOneLine()
+    jumpLine()
 
     print(tab() + dot() + ok, 'traces com status de SUCESSO')
     print(tab() + dot() + error, 'traces com status de ERRO')
     print(tab() + dot() + unSet, 'traces não receberam status de sucesso ou erro') 
 
     if(errorRequests.length > 0) {
-        jumpOneLine()
+        jumpLine()
         print(tab(2) + 'Requisições com erros:')
     }
     
@@ -24,7 +24,7 @@ export function getStatusOfRequests(spans) {
         let hasError = !!span.status?.message
         let errorMessage = hasError ? span.status.message : ''
         
-        jumpOneLine()
+        jumpLine()
         print(tab(2) + line() + name, link)
 
         if (hasError) print(tab(3) + 'Erro:', errorMessage)

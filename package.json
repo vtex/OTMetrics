@@ -9,9 +9,9 @@
   "dependencies": {
     "@opentelemetry/auto-instrumentations-node": "^0.33.1",
     "@opentelemetry/sdk-node": "^0.33.0",
-    "@opentelemetry/sdk-trace-base": "^1.7.0",
     "date-fns": "^2.29.3",
-    "inquirer": "^9.1.4"
+    "next": "^13.0.5",
+    "puppeteer": "^19.3.0"
   },
-  "bin": "./cli.js"
+  "bin": "./src/cli.js"
 }

@@ -1,10 +1,10 @@
-import { arrow, jumpOneLine, print, tab, dot } from '../utils.js'
+import { arrow, jumpLine, print, tab, dot } from '../utils/prompt.js'
 
 export function getNetworkInformation(spans) {
 
-    jumpOneLine()
+    jumpLine()
     print(arrow() + 'Informações de Rede')
-    jumpOneLine()
+    jumpLine()
 
     print(tab(2) + 'Para a montagem do servidor alguns processos são executados para garantir o funcionamento.')
 
@@ -16,7 +16,7 @@ export function getNetworkInformation(spans) {
 
     networkSpans.forEach(({ name, spanName }) => {
         
-        jumpOneLine()
+        jumpLine()
 
         let span = getSpanByName(spans, spanName)
         

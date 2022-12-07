@@ -1,4 +1,5 @@
-import { hrTimeToMilliseconds, jumpOneLine, milliToSec, print, translateSpanKind, tab, arrow } from '../utils.js'
+import { jumpLine, print, tab, arrow } from '../utils/prompt.js'
+import { hrTimeToMilliseconds, milliToSec, translateSpanKind } from '../utils/telemetry.js'
 
 export function getBiggestLatency( spans ) {
     
@@ -13,9 +14,9 @@ export function getBiggestLatency( spans ) {
     let latencyFixed = latency.toFixed(5).replace('.', ',')
     let kind = translateSpanKind(biggestSpan.kind)
     
-    jumpOneLine()
+    jumpLine()
     print(arrow() + 'Maior latência:')
-    jumpOneLine()
+    jumpLine()
 
     print(tab(2) + 'Nome:', name, link)
     print(tab(2) + 'Duração:', latencyFixed, 'segundos')
