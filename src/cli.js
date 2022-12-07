@@ -3,7 +3,7 @@
 import fs from 'fs'
 import path from 'path'
 import { startOTMetrics } from './OTMain.js'
-import { dotLine, jumpLine, print, error } from './utils/prompt.js'
+import { dotLine, jumpLine, print, errorMessage } from './utils/prompt.js'
 
 jumpLine()
 print(dotLine(4), 'OTMETRICS', dotLine(4))
@@ -14,7 +14,7 @@ try {
     
     if(!pathWasReceived) {
         jumpLine()
-        error('Passe um argumento com o PATH para um projeto em NextJS!')
+        errorMessage('Passe um argumento com o PATH para um projeto em NextJS!')
         process.exit()
     }
     
@@ -22,7 +22,7 @@ try {
     
     if(!isValidDirectory) {
         jumpLine()
-        error('PATH inválido para um diretório de projeto em NextJS!')
+        errorMessage('PATH inválido para um diretório de projeto em NextJS!')
         process.exit()
     }
     
@@ -30,7 +30,6 @@ try {
     
     let isValidNextJsProject = true
     const necessaryFilesInNextJsProject = [
-        '/pages',
         '/next.config.js',
         '/node_modules/next',
         '/node_modules/@next',
@@ -50,7 +49,7 @@ try {
 
     if(!isValidNextJsProject) {
         jumpLine()
-        error('Diretório passado não é um projeto em NextJS!')
+        errorMessage('Diretório passado não é um projeto em NextJS!')
         process.exit()
     }
 
@@ -58,10 +57,10 @@ try {
 
     process.exit()
 
-} catch(error) {
+} catch(err) {
     jumpLine()
-    error()
-    print(error)
+    errorMessage()
+    print(err)
     process.exit()    
 }
 

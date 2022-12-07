@@ -1,31 +1,39 @@
 import fs from 'fs'
 import { resolve } from 'path'
-import { getPageContentHTML } from 'metrics-module2'
-import { dotLine, jumpLine, print, error } from './utils/prompt.js'
+import { accessListOfPages } from './utils/browser.js'
+import { dotLine, jumpLine, print, errorMessage } from './utils/prompt.js'
 
-export function startExercising(projectPath, serverUrl) {
+export async function startExercising(projectPath, serverUrl) {
 
     jumpLine()  
     print(dotLine(2), 'EXECUTANDO')
     jumpLine()
     
     print('▹ Mapeando páginas acessíveis...')
-    const pages = getProjectPages(projectPath + '/pages')
+    
+    let rootPages = fs.existsSync(projectPath + '/pages')
+    let srcPages = fs.existsSync(projectPath + '/src/pages')
+    
+    let pages = []
+    if(rootPages) pages = getProjectPages(projectPath + '/pages')
+    else if(srcPages) pages = getProjectPages(projectPath + '/src/pages')
 
     if(pages.length === 0) {
         jumpLine()
-        error('Nenhuma página acessível encontrada. Não foi possível execitar o projeto')
+        errorMessage('Nenhuma página acessível encontrada. Não foi possível execitar o projeto!')
         process.exit()
-    } 
-    print('▸ Páginas mapeadas!')
+    }
 
+    print('▸ Páginas mapeadas!')
 
     jumpLine()
     print('▹ Acessando páginas...')
     
-    pages.forEach(async (page) => {
-        console.log(await getPageContentHTML(serverUrl + page))
-    })
+    await accessListOfPages(
+        pages.map((page) => {
+            serverUrl + page
+        })
+    )
 
     print('▸ Páginas acessadas!')
 }
@@ -42,9 +50,7 @@ function getProjectPages(projectPath, route = '') {
         let file = fs.lstatSync(resolve(completePath, filename))
 
         if(file.isFile() && itsAFileTooSee(filename)) {
-
             let justName = filename.replace(/\.[^/.]+$/, "")
-
             if(justName === 'index') pages.push(route + '/') 
             else pages.push(route + '/' + justName)
         }
@@ -62,7 +68,6 @@ function getProjectPages(projectPath, route = '') {
 function itsADirectotyToSee(dirname) {
     if(dirname.toLowerCase() === 'api') return false
     else if(dirname.includes('[') && dirname.includes(']')) return false
-    else if(dirname.includes(':')) return false
     
     return true
 }
@@ -71,7 +76,6 @@ function itsAFileTooSee(filename) {
     if(filename.toLowerCase().includes('_app')) return false
     else if(filename.toLowerCase().includes('_document')) return false
     else if(filename.includes('[') && filename.includes(']')) return false
-    else if(filename.includes(':')) return false
-    
+    else if(!filename.includes('.js') && !filename.includes('.jsx') && !filename.includes('.ts') && !filename.includes('.tsx')) return false
     return true
 }

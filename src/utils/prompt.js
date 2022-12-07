@@ -35,11 +35,11 @@ export function dotLine(number = 1) {
     return '•••'.repeat(number)
 }
 
-export function error( message = 'Aconteceu algum erro inesperado!') {
+export function errorMessage( message = 'Aconteceu algum erro inesperado!') {
     print('✕✕✕ ERRO')
-    jumpOneLine()
+    jumpLine()
     print(close() + message)
-    jumpOneLine()
+    jumpLine()
 }
 
 export function date(date) {
