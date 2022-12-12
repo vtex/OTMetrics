@@ -1,8 +1,7 @@
-import { print, jumpLine, tab, date, duration, dotLine} from './utils/prompt.js';
+import { print, jumpLine, tab, date, duration, dotLine } from './utils/prompt.js'
 import * as metrics from './metrics/index.js'
 
 export async function startProcessing( spans, startDate, endDate ) {
-    
     jumpLine()
     print(dotLine(2), 'INFORMAÇÕES')
     jumpLine()
@@ -26,7 +25,6 @@ export async function startProcessing( spans, startDate, endDate ) {
 }
 
 async function takeAllMetricsAndRun(spans) {
-
     await Promise.all(
         Object.entries(metrics).map(([ _, func ]) =>
           func(spans)

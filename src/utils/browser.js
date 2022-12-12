@@ -5,7 +5,7 @@
     Author: Caroliny Valença | github: carolvalenca
 */
 
-import puppeteer from "puppeteer";
+import puppeteer from 'puppeteer'
 
 async function getPageContentHTML(url) {
   const browser = await puppeteer.launch();
@@ -34,4 +34,3 @@ export async function accessListOfPages(urls) {
 
     browser.close(); // this
 }
-

@@ -44,4 +44,3 @@ function getSpanByName(spans, name) {
         }
     }
 }
-

@@ -11,7 +11,8 @@
     "@opentelemetry/sdk-node": "^0.33.0",
     "date-fns": "^2.29.3",
     "next": "^13.0.5",
-    "puppeteer": "^19.3.0"
+    "puppeteer": "^19.3.0",
+    "yargs": "^17.6.2"
   },
   "bin": "./src/cli.js"
 }

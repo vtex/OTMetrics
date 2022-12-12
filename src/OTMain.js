@@ -1,6 +1,6 @@
-import { startCollecting, getFinishedSpans } from "./OTCollector.js"
-import { startProcessing } from "./OTProcessor.js"
-import { startExercising } from "./OTExecutor.js"
+import { startCollecting, getFinishedSpans } from './OTCollector.js'
+import { startProcessing } from './OTProcessor.js'
+import { startExercising } from './OTExecutor.js'
 import { jumpLine, print } from './utils/prompt.js'
 
 export async function startOTMetrics(projectPath) {
@@ -11,6 +11,8 @@ export async function startOTMetrics(projectPath) {
     const serverUrl = await startCollecting(projectPath)    
     const startDate = Date.now()
 
+    console.log(serverUrl)
+
     await startExercising(projectPath, serverUrl)
 
     const endDate = Date.now()
@@ -20,5 +22,4 @@ export async function startOTMetrics(projectPath) {
         startDate,
         endDate
     )
-
 }

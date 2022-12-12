@@ -2,20 +2,50 @@
 
 import fs from 'fs'
 import path from 'path'
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv));
+
 import { startOTMetrics } from './OTMain.js'
-import { dotLine, jumpLine, print, errorMessage } from './utils/prompt.js'
+import { dotLine, jumpLine, print, errorMessage, dot, arrow, quit } from './utils/prompt.js'
+
+yargs.usage(
+    `Biblioteca capaz de executar uma aplicação NextJs e gerar um relatório do uso. 
+    ${dot()}Passe o comando${arrow()}$ otmetrics [path-do-projeto-nextjs]
+
+    Há um funcionamento automático, mas caso prefira é possível exercitar a aplicação manualmente passando a tag --manual`
+).options({
+    auto: {
+        default: 'auto',
+        alias: 'a'
+    },
+    manual: {
+        default: 'manual',
+        alias: 'm'
+    }
+}).describe({
+    auto: 'Exercitar a aplicação de forma automática.',
+    manual: 'Exercitar a aplicação de forma manual.'
+}).boolean(['auto', 'manual'])
+.help()
+.alias('h', 'help');
 
 jumpLine()
 print(dotLine(4), 'OTMETRICS', dotLine(4))
 
 try {
-    const pathReceived = process.argv[2]
+
+    const args = await yargs.argv
+
+    const methodOfExercising = args.auto ? 'auto' : args.manual ? 'manual' : ''
+
+    const pathReceived = args._[0]
     const pathWasReceived = !!pathReceived
     
     if(!pathWasReceived) {
         jumpLine()
         errorMessage('Passe um argumento com o PATH para um projeto em NextJS!')
-        process.exit()
+        quit()
     }
     
     const isValidDirectory = fs.existsSync(pathReceived) && fs.lstatSync(pathReceived).isDirectory()
@@ -23,7 +53,7 @@ try {
     if(!isValidDirectory) {
         jumpLine()
         errorMessage('PATH inválido para um diretório de projeto em NextJS!')
-        process.exit()
+        quit()
     }
     
     const absolutePath = path.resolve(pathReceived)
@@ -50,17 +80,16 @@ try {
     if(!isValidNextJsProject) {
         jumpLine()
         errorMessage('Diretório passado não é um projeto em NextJS!')
-        process.exit()
+        quit()
     }
 
     await startOTMetrics(absolutePath)
 
-    process.exit()
+    quit()
 
 } catch(err) {
     jumpLine()
     errorMessage()
     print(err)
-    process.exit()    
+    quit()    
 }
-

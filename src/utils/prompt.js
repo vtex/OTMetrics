@@ -49,3 +49,7 @@ export function date(date) {
 export function duration(dateLeft, dateRight) {
     return formatDistance(dateLeft, dateRight, { includeSeconds: true, locale: ptBR })
 }
+
+export function quit() {
+    process.exit()
+} 

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { resolve } from 'path'
 import { accessListOfPages } from './utils/browser.js'
-import { dotLine, jumpLine, print, errorMessage } from './utils/prompt.js'
+import { dotLine, jumpLine, print, errorMessage, quit } from './utils/prompt.js'
 
 export async function startExercising(projectPath, serverUrl) {
 
@@ -21,18 +21,16 @@ export async function startExercising(projectPath, serverUrl) {
     if(pages.length === 0) {
         jumpLine()
         errorMessage('Nenhuma página acessível encontrada. Não foi possível execitar o projeto!')
-        process.exit()
+        quit()
     }
 
     print('▸ Páginas mapeadas!')
 
     jumpLine()
     print('▹ Acessando páginas...')
-    
+
     await accessListOfPages(
-        pages.map((page) => {
-            serverUrl + page
-        })
+        pages.map((page) => serverUrl + page)
     )
 
     print('▸ Páginas acessadas!')
