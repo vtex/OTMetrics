@@ -1,79 +1,170 @@
 import fs from 'fs'
-import { resolve } from 'path'
+import inquirer from 'inquirer'
 import { accessListOfPages } from './utils/browser.js'
-import { dotLine, jumpLine, print, errorMessage, quit } from './utils/prompt.js'
+import { dotLine, jumpLine, print, errorMessage, quit, dot, delay, arrow, asterisk, clearLastLine, tab } from './utils/prompt.js'
 
-export async function startExercising(projectPath, serverUrl) {
+let pages = []
 
+export async function startExercising(projectPath, serverUrl, useManualExercising = false) {
     jumpLine()  
-    print(dotLine(2), 'EXECUTANDO')
-    jumpLine()
-    
-    print('▹ Mapeando páginas acessíveis...')
-    
-    let rootPages = fs.existsSync(projectPath + '/pages')
-    let srcPages = fs.existsSync(projectPath + '/src/pages')
-    
-    let pages = []
-    if(rootPages) pages = getProjectPages(projectPath + '/pages')
-    else if(srcPages) pages = getProjectPages(projectPath + '/src/pages')
+    print(dotLine(2), `EXERCÍCIO ${ useManualExercising ? 'MANUAL' : 'AUTOMATICO' }`)
 
+    if(useManualExercising) await manualExercising(serverUrl)
+    else await automaticExercising(serverUrl)
+}
+
+async function manualExercising(serverUrl) {
+    jumpLine()
+    print(dot() + 'No método de execução manual geramos uma url para que você possa acessar páginas da sua aplicação manualmente.')
+    print(asterisk() + 'Quando desejar receber os resultados, responsa a pergunta de finalização.')
+
+    await delay(5000)
+
+    jumpLine()
+    print(arrow() + 'URL da aplicação:', serverUrl)
+    jumpLine()
+
+    async function askIfItsOver(wait = 1) {
+        await delay(10000 * wait)
+
+        const answer = await inquirer.prompt([
+            {
+                type: 'confirm',
+                name: 'continue',
+                message: 'Finalizar execução?',
+                default: 'Y'
+            }
+        ])
+
+        if(answer.continue === true) return;
+        
+        await clearLastLine()
+        await askIfItsOver(wait)
+    }
+
+    await askIfItsOver()
+}
+
+async function automaticExercising(serverUrl) {
+    
     if(pages.length === 0) {
         jumpLine()
         errorMessage('Nenhuma página acessível encontrada. Não foi possível execitar o projeto!')
         quit()
     }
-
+    
+    let dynamicPages = pages.filter((page) => page.type === 'dynamic')
+    
+    if(dynamicPages.length > 0) {
+        jumpLine()
+        print(asterisk() + 'Encontrada(s)', dynamicPages.length, 'rota(s) dinâmica(s) que não será(ão) exercitada(s). Para testa-la(s) use o exercício manual!')
+        dynamicPages.forEach((page) => {
+            print(tab(2) + page.path)
+        })
+    }
+    
+    jumpLine()
     print('▸ Páginas mapeadas!')
 
     jumpLine()
     print('▹ Acessando páginas...')
 
-    await accessListOfPages(
-        pages.map((page) => serverUrl + page)
-    )
+    let staticPages = pages.filter((page) => page.type === 'static')
+    let completeRoutes = staticPages.map((page) => serverUrl + page.path)
 
+    await accessListOfPages(completeRoutes)
+        
     print('▸ Páginas acessadas!')
 }
 
-function getProjectPages(projectPath, route = '') {
-    
-    let pages = []
-    let completePath = projectPath + route
+export function getPagesFromBuild(projectPath) {
 
-    let filenames = fs.readdirSync(completePath)
-
-    filenames.forEach((filename) => {
-
-        let file = fs.lstatSync(resolve(completePath, filename))
-
-        if(file.isFile() && itsAFileTooSee(filename)) {
-            let justName = filename.replace(/\.[^/.]+$/, "")
-            if(justName === 'index') pages.push(route + '/') 
-            else pages.push(route + '/' + justName)
-        }
+    const pathToRoutesManifest = projectPath + '/.next/routes-manifest.json'
         
-        else if(file.isDirectory() && itsADirectotyToSee(filename)) {
-            pages = pages.concat(
-                getProjectPages(projectPath, route + '/' + filename)
-            )
-        }
-    })
+    const content = fs.readFileSync(pathToRoutesManifest, { encoding: 'utf8' })
+    const json = JSON.parse(content)
 
-    return pages
+    if(json?.staticRoutes.length > 0) {
+        pages = pages.concat(
+            json.staticRoutes.map((object) => {
+                return {
+                    type: 'static',
+                    path: object.page
+                }
+            })
+        )
+    }
+
+    if(json?.dynamicRoutes.length > 0) {
+        pages = pages.concat(
+            json.dynamicRoutes.map((object) => {
+                return {
+                    type: 'dynamic',
+                    path: object.page
+                }
+            })
+        )
+    }
 }
 
-function itsADirectotyToSee(dirname) {
-    if(dirname.toLowerCase() === 'api') return false
-    else if(dirname.includes('[') && dirname.includes(']')) return false
+// function getPagesWithSearching(projectPath) {
+//     let pages = []
     
-    return true
-}
+//     let rootPages = fs.existsSync(projectPath + '/pages')
+//     let srcPages = fs.existsSync(projectPath + '/src/pages')
+    
+//     if(rootPages) pages = getPagesInDirectory(projectPath + '/pages')
+//     else if(srcPages) pages = getPagesInDirectory(projectPath + '/src/pages')
+    
+//     function getPagesInDirectory(projectPath, route = '') {
+//         let pages = []
+//         let completePath = projectPath + route
 
-function itsAFileTooSee(filename) {
-    if(filename.toLowerCase().includes('_app')) return false
-    else if(filename.toLowerCase().includes('_document')) return false
-    else if(filename.includes('[') && filename.includes(']')) return false
-    else if(!filename.includes('.js') && !filename.includes('.jsx') && !filename.includes('.ts') && !filename.includes('.tsx')) return false
-    return true
-}
+//         let filenames = fs.readdirSync(completePath)
+
+//         filenames.forEach((filename) => {
+
+//             let file = fs.lstatSync(path.resolve(completePath, filename))
+
+//             if(file.isFile() && itsAFileTooSee(filename)) {
+//                 let justName = filename.replace(/\.[^/.]+$/, "")
+//                 if (justName === 'index') justName = '' 
+
+//                 pages.push({
+//                     path: route + '/' + justName,
+//                     type: 'static'
+//                 })
+//             }
+            
+//             else if(file.isDirectory() && itsADirectotyToSee(filename)) {
+//                 pages = pages.concat(
+//                     getPagesInDirectory(projectPath, route + '/' + filename)
+//                 )
+//             }
+//         })
+
+//         pages.forEach((page) => {
+//             if(page.path.includes('[') && page.path.includes(']')) {
+//                 page.type = 'dynamic'
+//             }
+//         })
+
+//         return pages
+//     }
+
+//     function itsADirectotyToSee(dirname) {
+//         if(dirname.toLowerCase() === 'api') return false
+        
+//         return true
+//     }
+    
+//     function itsAFileTooSee(filename) {
+//         if(filename.toLowerCase().includes('_app')) return false
+//         else if(filename.toLowerCase().includes('_document')) return false
+//         else if(!filename.includes('.js') && !filename.includes('.jsx') && !filename.includes('.ts') && !filename.includes('.tsx')) return false
+        
+//         return true
+//     }
+
+//     return pages
+// }

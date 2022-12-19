@@ -13,7 +13,7 @@ const sdk = new opentelemetry.NodeSDK({
   ]
 });
 
-export async function startCollecting(projectPath) {
+export async function startCollecting(projectPath, isManualExercising) {
 
   jumpLine()  
   print(dotLine(2), 'INICIANDO')
@@ -26,7 +26,7 @@ export async function startCollecting(projectPath) {
   jumpLine()
 
   print('▹ Iniciando projeto...')
-  let { serverIsListening, url } = await startServering(projectPath)
+  let { serverIsListening, url } = await startServering(projectPath, isManualExercising)
   
   if(!serverIsListening) {
       jumpLine()
@@ -34,12 +34,15 @@ export async function startCollecting(projectPath) {
       quit()
   }
 
-  print('▸ Projeto pronto!')
+  print('▸ Projeto em execução!')
 
   return url
-  
 }
 
 export function getFinishedSpans() {
   return traceExporter.getFinishedSpans()
 }
+
+process.on('exit', async () => {
+  await sdk.shutdown()
+})

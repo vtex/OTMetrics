@@ -27,6 +27,10 @@ export function asterisk() {
     return ' * '
 }
 
+export function exclamation() {
+    return ' ! '
+}
+
 export function close() {
     return ' ✕ '
 }
@@ -53,3 +57,12 @@ export function duration(dateLeft, dateRight) {
 export function quit() {
     process.exit()
 } 
+
+export function delay(amount = 1000) {
+    return new Promise(resolve => setTimeout(resolve, amount))
+}
+
+export function clearLastLine() {
+    process.stdout.moveCursor(0, -1)
+    process.stdout.clearLine(1)
+}

@@ -37,7 +37,7 @@ try {
 
     const args = await yargs.argv
 
-    const methodOfExercising = args.auto ? 'auto' : args.manual ? 'manual' : ''
+    const useManualExercising = args.manual === true
 
     const pathReceived = args._[0]
     const pathWasReceived = !!pathReceived
@@ -83,7 +83,7 @@ try {
         quit()
     }
 
-    await startOTMetrics(absolutePath)
+    await startOTMetrics(absolutePath, useManualExercising)
 
     quit()
 
